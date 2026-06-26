@@ -18,8 +18,6 @@ export default function MobileNav() {
     { label: "Home", href: "/", icon: Home },
     { label: "Search", href: "/listings", icon: Search },
     { label: "Sell", href: "/onboarding", icon: PlusCircle, highlight: true },
-    { label: "Quotes", href: "/cart", icon: ShoppingBag, badge: totalItems },
-    { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   ];
 
   return (
@@ -45,13 +43,6 @@ export default function MobileNav() {
                 className={`${item.highlight ? "w-6 h-6" : "w-5 h-5"} mb-0.5`}
               />
               <span>{item.label}</span>
-
-              {/* RFQ Cart Item Count Badge */}
-              {!!item.badge && (
-                <span className="absolute top-2 right-4 bg-brand-crimson text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                  {item.badge}
-                </span>
-              )}
             </Link>
           );
         })}
