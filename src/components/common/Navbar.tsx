@@ -33,7 +33,7 @@ export default function Navbar() {
 
   // Integrated link schema maps
   const leftNavigationLinks = [
-    { name: "Discover", href: "/listings", icon: Store },
+    { name: "Shop", href: "/listings", icon: Store },
     { name: "My Orders", href: "/orders", icon: PackageCheck },
     { name: "Merchant Portal", href: "/onboarding", icon: LayoutDashboard },
   ];

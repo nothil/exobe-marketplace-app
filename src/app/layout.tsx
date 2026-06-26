@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "eXobe Africa | Next-Gen Marketplace",
+  title: "eXobe Africa",
   description:
     "Empowering African entrepreneurs with modern marketplace trade systems.",
 };
