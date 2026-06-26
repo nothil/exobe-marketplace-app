@@ -97,11 +97,8 @@ export default function DiscoverCatalogPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-neutral-200 mb-8">
         <div>
           <h1 className="text-2xl font-black text-neutral-900 tracking-tight">
-            Discover Hub
+            Shop by category
           </h1>
-          <p className="text-xs text-neutral-500 font-mono">
-            Exploring {filteredListings.length} verified listings live
-          </p>
         </div>
 
         {/* SMART SEARCH COMPONENT */}

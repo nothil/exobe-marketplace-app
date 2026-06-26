@@ -1,194 +1,171 @@
 "use client";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
+  Sparkles,
+  ChevronLeft,
+  ChevronRight,
   ArrowRight,
-  ShieldCheck,
-  Zap,
-  Globe,
-  Smartphone,
   Store,
-  TrendingUp,
+  ShieldCheck,
+  Globe,
 } from "lucide-react";
+import { SLIDESHOW_DATA, CATEGORIES } from "@/data/marketplaceData";
 
-export default function LandingPage() {
-  // Hardcoded active hubs to demonstrate continental architecture intent
-  const marketHubs = ["Johannesburg", "Nairobi", "Lagos", "Accra", "Cape Town"];
+export default function RootLandingPage() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Synchronized automatic promotional rotator loop engine
+  useEffect(() => {
+    const slideTimer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % SLIDESHOW_DATA.length);
+    }, 6000);
+    return () => clearInterval(slideTimer);
+  }, []);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % SLIDESHOW_DATA.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide(
+      (prev) => (prev - 1 + SLIDESHOW_DATA.length) % SLIDESHOW_DATA.length,
+    );
+  };
 
   return (
-    <div className="space-y-24 pb-20 pt-8">
-      {/* 01. HERO SECTION: Dual-Path Conversion Focus */}
-      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-neutral-900 to-brand-black border border-white/5 px-6 py-16 sm:px-12 sm:py-24 text-center">
-        {/* Abstract Background Grid Glow */}
-        <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:32px_32px]" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand-crimson/10 blur-[120px] rounded-full pointer-events-none" />
+    <div className="py-8 space-y-12">
+      {/* 1. THE HERO INTEGRATED SLIDESHOW ENGINE */}
+      <div className="relative w-full h-[400px] bg-neutral-950 rounded-3xl overflow-hidden border border-white/10 shadow-2xl group/slide">
+        <div className="absolute inset-0 w-full h-full">
+          <img
+            src={SLIDESHOW_DATA[currentSlide].image}
+            alt={SLIDESHOW_DATA[currentSlide].title}
+            className="w-full h-full object-cover transition-all duration-700 ease-in-out filter brightness-35 scale-102"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent md:bg-gradient-to-r md:from-black md:via-black/60 md:to-transparent" />
+        </div>
 
-        <div className="max-w-3xl mx-auto space-y-6">
-          {/* Tagline Badge */}
-          <div className="inline-flex items-center space-x-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-xs text-neutral-300 font-mono tracking-wider uppercase">
-            <span className="flex h-2 w-2 rounded-full bg-brand-crimson animate-pulse" />
-            <span>
-              Built for South Africa Today. Architected for Africa Tomorrow.
-            </span>
-          </div>
-
-          {/* Aggressive Clear Headline */}
-          <h1 className="text-4xl sm:text-6xl font-black tracking-tight leading-[1.1] text-white">
-            Elevating African Commerce. <br />
-            <span className="text-brand-crimson">Not Exploiting It.</span>
+        <div className="absolute inset-0 p-6 sm:p-10 md:p-16 flex flex-col justify-end md:justify-center items-start max-w-2xl space-y-4 z-10">
+          <span className="text-[10px] font-mono font-black tracking-widest text-brand-crimson uppercase bg-brand-crimson/10 border border-brand-crimson/30 px-3 py-1 rounded">
+            {SLIDESHOW_DATA[currentSlide].subtitle}
+          </span>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight leading-tight">
+            {SLIDESHOW_DATA[currentSlide].title}
           </h1>
-
-          <p className="text-base sm:text-lg text-neutral-400 max-w-2xl mx-auto font-normal leading-relaxed">
-            The decentralized, high-performance marketplace platform connecting
-            premium African vendors with regional and cross-border buyers.
-            Completely mobile-optimized.
+          <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed max-w-md">
+            {SLIDESHOW_DATA[currentSlide].description}
           </p>
 
-          {/* Dual Action CTAs */}
-          <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/onboarding"
-              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-brand-crimson hover:bg-brand-crimson/90 font-bold text-white flex items-center justify-center space-x-2 transition-all shadow-lg shadow-brand-crimson/20 active:scale-98"
-            >
-              <Store className="w-5 h-5" />
-              <span>Register as a Vendor</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-
-            <Link
-              href="/listings"
-              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-neutral-900 border border-white/10 hover:border-white/20 font-bold text-white flex items-center justify-center space-x-2 transition-all active:scale-98"
-            >
-              <span>Explore Marketplace</span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 02. CONTINENTAL HUB RUNWAY: Architectural Intent Indicator */}
-      <section className="border-y border-white/5 py-6 overflow-hidden">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="text-xs font-mono text-neutral-500 uppercase tracking-widest flex items-center space-x-2 shrink-0">
-            <Globe className="w-4 h-4 text-brand-crimson animate-spin-slow" />
-            <span>Active Operational Hubs:</span>
-          </div>
-          <div className="flex items-center space-x-8 md:space-x-12 overflow-x-auto no-scrollbar py-2 w-full justify-start md:justify-end">
-            {marketHubs.map((hub) => (
-              <span
-                key={hub}
-                className="text-sm font-semibold tracking-wide text-neutral-400 shrink-0"
-              >
-                {hub}{" "}
-                <span className="text-brand-crimson font-mono ml-2">//</span>
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 03. CORE VALUE PROPOSITIONS: Designed for Local Context */}
-      <section className="space-y-12">
-        <div className="text-center space-y-4">
-          <h2 className="text-3xl font-black tracking-tight text-white">
-            Why Visionary Entrepreneurs Choose eXobe
-          </h2>
-          <p className="text-neutral-400 max-w-xl mx-auto text-sm">
-            We removed the traditional structural friction patterns keeping
-            African enterprises disconnected.
-          </p>
+          <Link
+            href="/listings"
+            className="inline-flex items-center space-x-2 bg-brand-crimson hover:bg-brand-crimson/90 text-white font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-all active:scale-98 shadow-lg"
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>{SLIDESHOW_DATA[currentSlide].cta}</span>
+          </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Card 1: Mobile First */}
-          <div className="p-8 rounded-2xl bg-neutral-950 border border-white/5 space-y-4">
-            <div className="w-12 h-12 rounded-xl bg-brand-crimson/10 border border-brand-crimson/20 flex items-center justify-center text-brand-crimson">
-              <Smartphone className="w-6 h-6" />
-            </div>
-            <h3 className="text-xl font-bold text-white">
-              Mobile-Optimized Engine
-            </h3>
-            <p className="text-neutral-400 text-sm leading-relaxed">
-              Engineered exclusively for lower bandwidth speeds and high-density
-              mobile usage. Built as a native Progressive Web Application (PWA).
-            </p>
-          </div>
+        {/* Manual Left/Right Triggers */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-4 top-1/2 -translate-y-1/2 p-2.5 rounded-xl bg-black/60 border border-white/10 text-neutral-400 hover:text-white opacity-0 group-hover/slide:opacity-100 transition-opacity z-20"
+        >
+          <ChevronLeft className="w-4 h-4" />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute right-4 top-1/2 -translate-y-1/2 p-2.5 rounded-xl bg-black/60 border border-white/10 text-neutral-400 hover:text-white opacity-0 group-hover/slide:opacity-100 transition-opacity z-20"
+        >
+          <ChevronRight className="w-4 h-4" />
+        </button>
 
-          {/* Card 2: Frictionless RFQ & WhatsApp Flows */}
-          <div className="p-8 rounded-2xl bg-neutral-950 border border-white/5 space-y-4">
-            <div className="w-12 h-12 rounded-xl bg-brand-crimson/10 border border-brand-crimson/20 flex items-center justify-center text-brand-crimson">
-              <Zap className="w-6 h-6" />
-            </div>
-            <h3 className="text-xl font-bold text-white">
-              High-Intent Engagements
-            </h3>
-            <p className="text-neutral-400 text-sm leading-relaxed">
-              No generic add-to-cart disconnects. Trade shifts straight to
-              direct custom RFQs or instant WhatsApp negotiation queues matching
-              authentic regional enterprise habits.
-            </p>
-          </div>
-
-          {/* Card 3: The Trust Layer */}
-          <div className="p-8 rounded-2xl bg-neutral-950 border border-white/5 space-y-4">
-            <div className="w-12 h-12 rounded-xl bg-brand-crimson/10 border border-brand-crimson/20 flex items-center justify-center text-brand-crimson">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <h3 className="text-xl font-bold text-white">
-              Ubuntu Verification Layer
-            </h3>
-            <p className="text-neutral-400 text-sm leading-relaxed">
-              Gain explicit marketplace visibility through structural profile
-              identity verification verification badges designed to scale
-              transaction trust effortlessly.
-            </p>
-          </div>
+        {/* Slide Indicator Dots Track */}
+        <div className="absolute bottom-6 right-6 flex items-center space-x-1.5 z-20">
+          {SLIDESHOW_DATA.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-2 h-2 rounded-full transition-all ${index === currentSlide ? "bg-brand-crimson w-5" : "bg-white/20"}`}
+            />
+          ))}
         </div>
-      </section>
+      </div>
 
-      {/* 04. SCORESHEET EDGE: Marketplace Platform Teaser */}
-      <section className="rounded-2xl bg-neutral-950 border border-white/5 p-8 sm:p-12 flex flex-col lg:flex-row items-center gap-8 justify-between">
-        <div className="space-y-4 max-w-xl">
-          <div className="inline-flex items-center space-x-1.5 text-xs font-mono font-bold text-brand-crimson tracking-wider bg-brand-crimson/5 border border-brand-crimson/20 px-2.5 py-1 rounded">
-            <TrendingUp className="w-3.5 h-3.5" />
-            <span>Category Intelligence Embedded</span>
-          </div>
-          <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Track business velocity anywhere.
+      {/* 2. VALUE PROPOSITION FEATURE LAYERS */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="p-5 bg-neutral-950 border border-white/5 rounded-2xl space-y-2">
+          <Store className="w-5 h-5 text-brand-crimson" />
+          <h3 className="text-xs font-mono font-bold uppercase text-white tracking-wide">
+            Direct Sourcing
           </h3>
-          <p className="text-neutral-400 text-sm leading-relaxed">
-            Get access to predictive inventory intelligence indicators that
-            surface which product categories are underserved or spiking in
-            demand directly across specific metropolitan regions.
+          <p className="text-xs text-neutral-400 leading-relaxed">
+            Connect directly with certified pan-African enterprises and local
+            suppliers without intermediaries.
           </p>
         </div>
-
-        {/* Mock Minimalist Dashboard Graph Visualizer for UI Polish */}
-        <div className="w-full lg:w-80 bg-brand-black border border-white/10 rounded-xl p-5 space-y-4 shrink-0 font-mono text-xs">
-          <div className="flex items-center justify-between text-neutral-400 border-b border-white/5 pb-2">
-            <span>Live Regional Demand</span>
-            <span className="text-brand-crimson animate-pulse">● Live</span>
-          </div>
-          <div className="space-y-3">
-            <div>
-              <div className="flex justify-between mb-1">
-                <span className="text-neutral-300">Agri-Processing</span>
-                <span className="text-emerald-400">+84%</span>
-              </div>
-              <div className="w-full bg-neutral-900 h-2 rounded-full overflow-hidden">
-                <div className="bg-brand-crimson h-full w-[84%]" />
-              </div>
-            </div>
-            <div>
-              <div className="flex justify-between mb-1">
-                <span className="text-neutral-300">Custom Textiles</span>
-                <span className="text-emerald-400">+61%</span>
-              </div>
-              <div className="w-full bg-neutral-900 h-2 rounded-full overflow-hidden">
-                <div className="bg-brand-crimson h-full w-[61%]" />
-              </div>
-            </div>
-          </div>
+        <div className="p-5 bg-neutral-950 border border-white/5 rounded-2xl space-y-2">
+          <ShieldCheck className="w-5 h-5 text-emerald-500" />
+          <h3 className="text-xs font-mono font-bold uppercase text-white tracking-wide">
+            Escrow Protection
+          </h3>
+          <p className="text-xs text-neutral-400 leading-relaxed">
+            Transactions are fully verified, secured, and held until the raw
+            assets safely reach their port destination.
+          </p>
         </div>
-      </section>
+        <div className="p-5 bg-neutral-950 border border-white/5 rounded-2xl space-y-2">
+          <Globe className="w-5 h-5 text-blue-500" />
+          <h3 className="text-xs font-mono font-bold uppercase text-white tracking-wide">
+            Cross-Border Rails
+          </h3>
+          <p className="text-xs text-neutral-400 leading-relaxed">
+            Seamlessly checkout using integrated multi-currency systems mapping
+            major African trading hubs.
+          </p>
+        </div>
+      </div>
+
+      {/* 3. QUICK DISCOVERY CATEGORIES PORT */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-lg font-black text-white tracking-tight">
+              Browse by Category
+            </h2>
+            <p className="text-[11px] font-mono text-neutral-500">
+              Explore structured trade inventory networks
+            </p>
+          </div>
+          <Link
+            href="/listings"
+            className="inline-flex items-center space-x-1 text-xs font-mono text-neutral-400 hover:text-white transition-colors group"
+          >
+            <span>Open Catalog</span>
+            <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {CATEGORIES.filter((cat) => cat !== "All Items")
+            .slice(0, 4)
+            .map((category) => (
+              <Link
+                key={category}
+                href="/listings"
+                className="p-5 bg-neutral-950 border border-white/5 rounded-2xl flex flex-col justify-between items-start hover:border-white/10 transition-all group"
+              >
+                <span className="text-xs font-bold text-white group-hover:text-brand-crimson transition-colors">
+                  {category}
+                </span>
+                <span className="text-[10px] font-mono text-neutral-500 mt-4 inline-flex items-center space-x-1">
+                  <span>Explore</span>
+                  <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all transform translate-x-[-4px] group-hover:translate-x-0" />
+                </span>
+              </Link>
+            ))}
+        </div>
+      </div>
     </div>
   );
 }

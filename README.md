@@ -31,14 +31,15 @@ Application running on: http://localhost:3000
 - copilot to speed the code generation
 - Gemini for research
 
+## Features
+
+- For this project I added a currency change feature, a user is able to use a preferred currency since eXobe trade across the continent.
+- Mobile-First Responsive Design: Engineered with a strict thumb-zone interface layout, built entirely for the smartphone-driven African business market.
+- Smart Search Engine: An intelligent search bar parsing queries across product titles, category tags, item descriptions, and city locations concurrently with instant typeahead suggestions.
+
 ## 3 What I Chose Not to Build
 
 - Database & Auth Integration: Deliberately left out Prisma, PostgreSQL, and NextAuth schemas. I prioritized building a high-fidelity interactive search interface first rather than spending time setting up boilerplate CRUD state management.
-
-## Features
-
-- Mobile-First Responsive Design: Engineered with a strict thumb-zone interface layout, built entirely for the smartphone-driven African business market.
-- Smart Search Engine: An intelligent search bar parsing queries across product titles, category tags, item descriptions, and city locations concurrently with instant typeahead suggestions.
 
 ### Key Architecture Routes
 
