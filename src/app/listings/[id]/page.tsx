@@ -1,4 +1,5 @@
 "use client";
+import { use } from "react"; // Imported to safely resolve dynamic async router params
 import { useCurrency } from "@/context/currencyContext";
 import { useCartStore } from "@/store/useCartStore";
 import { MARKETPLACE_DATA_MOCK } from "@/data/marketplaceData";
@@ -6,16 +7,22 @@ import { ShoppingCart, ArrowLeft, ShieldCheck, Truck } from "lucide-react";
 import Link from "next/link";
 
 interface ListingDetailPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default function ListingDetailPage({ params }: ListingDetailPageProps) {
+  // 1. Unwrap the async param contract cleanly to prevent Type usability crashes
+  const resolvedParams = use(params);
+
   const { formatPrice } = useCurrency();
   const addItem = useCartStore((state) => state.addItem);
 
-  const product = MARKETPLACE_DATA_MOCK.find((item) => item.id === params.id);
+  // 2. Modified item matching pattern using explicit String type casting to guarantee reliable lookups
+  const product = MARKETPLACE_DATA_MOCK.find(
+    (item) => String(item.id) === String(resolvedParams.id),
+  );
 
   if (!product) {
     return (
@@ -67,6 +74,7 @@ export default function ListingDetailPage({ params }: ListingDetailPageProps) {
               </p>
             </div>
 
+            {/* Swapped "Procure Asset" for "Add to Basket" */}
             <button
               onClick={() =>
                 addItem(
@@ -83,7 +91,7 @@ export default function ListingDetailPage({ params }: ListingDetailPageProps) {
               className="bg-brand-crimson hover:bg-brand-crimson/90 text-white font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-xl flex items-center space-x-2 transition-all active:scale-98 shadow-lg"
             >
               <ShoppingCart className="w-4 h-4" />
-              <span>Procure Asset</span>
+              <span>Add to Basket</span>
             </button>
           </div>
 
