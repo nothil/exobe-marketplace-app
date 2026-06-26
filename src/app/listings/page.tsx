@@ -12,7 +12,10 @@ import {
   Sparkles,
   X,
   CornerDownLeft,
+  ShoppingBag, // Added for direct cart actions
 } from "lucide-react";
+import { useCurrency } from "@/context/currencyContext";
+import { useCartStore } from "@/store/useCartStore"; // Added store hook
 
 import {
   SLIDESHOW_DATA,
@@ -26,9 +29,11 @@ export default function DiscoverCatalogPage() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
+  const { formatPrice } = useCurrency();
+  const addItem = useCartStore((state) => state.addItem); // Grab cart action
+
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
-  // Auto-slide effect engine
   useEffect(() => {
     const slideTimer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % SLIDESHOW_DATA.length);
@@ -36,7 +41,6 @@ export default function DiscoverCatalogPage() {
     return () => clearInterval(slideTimer);
   }, []);
 
-  // Click outside listener to dismiss search suggestions
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -60,41 +64,26 @@ export default function DiscoverCatalogPage() {
     );
   };
 
-  // Multi-field intelligent processing filter pipeline
   const filteredListings = useMemo(() => {
     return MARKETPLACE_DATA_MOCK.filter((item) => {
       const matchesCategory =
         selectedCategory === "All Items" || item.category === selectedCategory;
-
       const cleaningQuery = searchQuery.toLowerCase().trim();
       if (!cleaningQuery) return matchesCategory;
 
-      const matchesTitle = item.title.toLowerCase().includes(cleaningQuery);
-      const matchesDescription = item.description
-        .toLowerCase()
-        .includes(cleaningQuery);
-      const matchesCity = item.location_city
-        .toLowerCase()
-        .includes(cleaningQuery);
-      const matchesItemCategory = item.category
-        .toLowerCase()
-        .includes(cleaningQuery);
-
       return (
         matchesCategory &&
-        (matchesTitle ||
-          matchesDescription ||
-          matchesCity ||
-          matchesItemCategory)
+        (item.title.toLowerCase().includes(cleaningQuery) ||
+          item.description.toLowerCase().includes(cleaningQuery) ||
+          item.location_city.toLowerCase().includes(cleaningQuery) ||
+          item.category.toLowerCase().includes(cleaningQuery))
       );
     });
   }, [selectedCategory, searchQuery]);
 
-  // Instant suggestion predictive generator
   const liveSmartSuggestions = useMemo(() => {
     const cleanQuery = searchQuery.toLowerCase().trim();
     if (cleanQuery.length < 1) return [];
-
     return MARKETPLACE_DATA_MOCK.filter(
       (item) =>
         item.title.toLowerCase().includes(cleanQuery) ||
@@ -302,17 +291,41 @@ export default function DiscoverCatalogPage() {
                         </p>
                       </div>
 
-                      <div className="pt-3 border-t border-white/5 flex items-center justify-between">
+                      {/* ACTION CONTROLS INTERFACE ROW */}
+                      <div className="pt-3 border-t border-white/5 flex items-center justify-between gap-2">
                         <span className="text-sm font-mono font-black text-white">
-                          R {item.price.toFixed(2)}
+                          {formatPrice(item.price)}
                         </span>
-                        <Link
-                          href={`/listings/${item.id}`}
-                          className="bg-neutral-900 border border-white/10 text-white hover:bg-white hover:text-black px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-wider flex items-center space-x-1.5 transition-all"
-                        >
-                          <Eye className="w-3.5 h-3.5" />
-                          <span>View</span>
-                        </Link>
+
+                        <div className="flex items-center space-x-1.5">
+                          {/* INSTANT DIRECT ADD-TO-CART ACTION BUTTON */}
+                          <button
+                            onClick={() =>
+                              addItem(
+                                {
+                                  id: item.id,
+                                  title: item.title,
+                                  price: item.price,
+                                  images: item.images,
+                                  location_city: item.location_city,
+                                },
+                                1,
+                              )
+                            }
+                            className="bg-brand-crimson hover:bg-brand-crimson/90 border border-brand-crimson text-white p-2 rounded-xl transition-all active:scale-95"
+                            title="Add item directly to cart"
+                          >
+                            <ShoppingBag className="w-3.5 h-3.5" />
+                          </button>
+
+                          <Link
+                            href={`/listings/${item.id}`}
+                            className="bg-neutral-900 border border-white/10 text-white hover:bg-white hover:text-black px-3 py-2 rounded-xl text-[11px] font-bold uppercase tracking-wider flex items-center space-x-1 transition-all"
+                          >
+                            <Eye className="w-3.5 h-3.5" />
+                            <span>View</span>
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </div>

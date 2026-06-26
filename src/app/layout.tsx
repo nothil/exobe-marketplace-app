@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/common/Navbar";
 import MobileNav from "@/components/common/MobileNav";
+import { CurrencyProvider } from "@/context/currencyContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,11 +31,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-brand-black text-white min-h-screen pb-16 md:pb-0`}
       >
-        <Navbar />
-        <main className="w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {children}
-        </main>
-        <MobileNav />
+        {/* Wrap your layout items with the provider so everything underneath it can convert prices instantly */}
+        <CurrencyProvider>
+          <Navbar />
+          <main className="w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            {children}
+          </main>
+          <MobileNav />
+        </CurrencyProvider>
       </body>
     </html>
   );

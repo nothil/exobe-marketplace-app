@@ -2,7 +2,9 @@
 
 eXobe is a high-conversion, mobile-first retail marketplace designed to empower African entrepreneurs and buyers. the platform features lightning-fast catalog search, live multi-field smart querying, and zero-interest fintech payment simulations tailored for the regional ecosystem.
 
-### Project setup
+### 1 Setup Instructions & Deployment
+
+Live deployed link [Link to website](https://exobe-marketplace-app.vercel.app/listings)
 
 git clone https://github.com/nothil/exobe-marketplace-app.git
 
@@ -15,31 +17,32 @@ $ npm install
 ```bash
 # development
 $ npm run dev
+```
 
 Application running on: http://localhost:3000
 
+## 2 Stack & AI Tools Used
 
-##  Technologies Used
-
+- For frontend Architecture chosen for clean type-safe structures and server-rendered deployment performance.
 - Next.js
 - TypeScript
 - Tailwinds, css
 - Zustand
+- copilot to speed the code generation
+- Gemini for research
 
+## 3 What I Chose Not to Build
 
-## 📱 Features
+- Database & Auth Integration: Deliberately left out Prisma, PostgreSQL, and NextAuth schemas. I prioritized building a high-fidelity interactive search interface first rather than spending time setting up boilerplate CRUD state management.
 
-- **Mobile-First Responsive Design**: Engineered with a strict thumb-zone interface layout, built entirely for the smartphone-driven African business market.
-- **Smart Search Engine**: An intelligent search bar parsing queries across product titles, category tags, item descriptions, and city locations concurrently with instant typeahead suggestions.
-- **Interactive Promotion Runway**: Automated hero slideshow banner showcasing high-demand categories with custom deep-link navigation overrides.
-- **Dynamic Category Filtration**: Expandable sticky sidebars handling immediate multi-category isolate requests safely.
-- **Robust Vendor Onboarding**: A complete, seamless, multi-step profile creation wizard allowing merchants to launch verified product listings live instantly.
-- **Synchronized Global Basket Flow**: Real-time persistent state checkout system powered by Zustand, tracking absolute item and volume counts with full hydration mismatch protection.
-- **PayJustNow Installment Engine**: A高 fidelity South African fintech collection simulator splitting checkout cart totals into 3 interest-free payments using real-time localized dynamic date structures.
+## Features
 
-- Key Architecture Routes
+- Mobile-First Responsive Design: Engineered with a strict thumb-zone interface layout, built entirely for the smartphone-driven African business market.
+- Smart Search Engine: An intelligent search bar parsing queries across product titles, category tags, item descriptions, and city locations concurrently with instant typeahead suggestions.
 
-- /listings  The core discovery hub catalog, slideshow, and smart search controls.
+### Key Architecture Routes
+
+- /listings The core discovery hub catalog, slideshow, and smart search controls.
 
 - /listings/[id] - Dynamic production detail pages with interactive cart parameters.
 
@@ -49,11 +52,6 @@ Application running on: http://localhost:3000
 
 - /orders - The historical buyer escrow procurement tracking board.
 
----
-
 ## Deploy on Vercel
 
 ### This website is deployed on vercel you can check it out
-
-Check out our [Link to website](https://exobe-marketplace-app.vercel.app/)
-```

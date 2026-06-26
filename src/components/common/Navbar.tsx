@@ -8,9 +8,9 @@ import {
   LayoutDashboard,
   User,
   PackageCheck,
-  UserPlus,
 } from "lucide-react";
 import { useCartStore } from "@/store/useCartStore";
+import CurrencySelector from "./currencySelector"; // Imported currency modifier component
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -44,7 +44,8 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between gap-4">
           {/* Marketplace Branding Logo */}
           <div className="flex items-center gap-2">
-            <Link href="/listings" className="flex items-center space-x-2">
+            {/* Swapped link from /listings to / to match root layout landing defaults */}
+            <Link href="/" className="flex items-center space-x-2">
               <span className="bg-gradient-to-r from-brand-crimson to-rose-500 bg-clip-text text-xl font-black tracking-tight text-transparent">
                 eXobe
               </span>
@@ -75,18 +76,11 @@ export default function Navbar() {
 
           {/* Interactive Utility Control Blocks */}
           <div className="flex items-center space-x-3 ml-auto md:ml-0">
-            {/* REGISTER ACTION CTA BUTTON */}
-            <Link
-              href="/register"
-              className={`hidden sm:flex items-center space-x-1.5 px-3.5 py-2 border rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
-                pathname === "/register"
-                  ? "bg-brand-crimson border-brand-crimson text-white"
-                  : "bg-transparent border-white/10 text-neutral-400 hover:text-white hover:border-white/20"
-              }`}
-            >
-              <UserPlus className="w-3.5 h-3.5" />
-              <span>Register</span>
-            </Link>
+            {/* 
+              REPLACED REGISTER BUTTON:
+              The functional dynamic continental currency selector is now embedded here
+            */}
+            <CurrencySelector />
 
             {/* Live Synchronized Basket Shortcut Trigger */}
             <Link
