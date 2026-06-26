@@ -210,7 +210,6 @@ export default function VendorOnboardingPage() {
           )}
         </div>
 
-        {/* RIGHT COMPONENT: LIVE PREVIEW SIMULATOR CARD */}
         <div className="lg:col-span-5 space-y-4 lg:sticky lg:top-24">
           <div className="bg-neutral-950 border border-white/5 p-5 rounded-2xl space-y-4">
             <div className="flex items-center justify-between border-b border-white/5 pb-2">

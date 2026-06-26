@@ -10,7 +10,7 @@ import {
   PackageCheck,
 } from "lucide-react";
 import { useCartStore } from "@/store/useCartStore";
-import CurrencySelector from "./currencySelector"; // Imported currency modifier component
+import CurrencySelector from "./currencySelector";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -76,10 +76,6 @@ export default function Navbar() {
 
           {/* Interactive Utility Control Blocks */}
           <div className="flex items-center space-x-3 ml-auto md:ml-0">
-            {/* 
-              REPLACED REGISTER BUTTON:
-              The functional dynamic continental currency selector is now embedded here
-            */}
             <CurrencySelector />
 
             {/* Live Synchronized Basket Shortcut Trigger */}
